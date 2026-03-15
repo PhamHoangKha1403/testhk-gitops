@@ -1,0 +1,48 @@
+apiVersion: app.helios.io/v1alpha1
+kind: HeliosApp
+metadata:
+  name: test1111
+  namespace: default
+spec:
+
+  description: "Managed by Helios Operator"
+  owner: 
+  
+  # Required Git/Docker Info
+  imageRepo: phamhoangkha1403/phamhoangkha1403
+  gitRepo: "https://github.com/PhamHoangKha1403/testhk.git"
+  gitopsRepo: https://github.com/PhamHoangKha1403/testhk-gitops
+  gitopsPath: "apps/test1111" # Assumed path
+  port: 8080
+  replicas: 1
+  testCommand: npm install && npm test
+  
+  # Webhook Config
+  webhookDomain: unarriving-unrapturously-amia.ngrok-free.dev
+  webhookSecret: "github-credentials-test1111"
+  gitopsSecretRef: "github-credentials-test1111"
+
+  components:
+    - name: test1111-backend
+      type: web-service
+      properties:
+        image: phamhoangkha1403/phamhoangkha1403:latest
+        port: 8080
+        replicas: 1
+        env:
+          - name: NODE_ENV
+            value: "production"
+      traits:
+        - type: service
+          properties:
+            port: 8080
+            targetPort: 8080
+        
+        - type: database
+          properties:
+            dbType: "postgres"
+            
+            dbName: "hoangkha"
+            
+            version: "16"
+        
