@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test1111
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test1111
+  template:
+    metadata:
+      labels:
+        app: test1111
+    spec:
+      containers:
+        - name: app
+          image: phamhoangkha1403/phamhoangkha1403:@sha256:f112c10363af9a37e03d9591591f0f9e4d19c54ba86ebcea5fcc77a641c4907f
+          ports:
+            - containerPort: 8080
